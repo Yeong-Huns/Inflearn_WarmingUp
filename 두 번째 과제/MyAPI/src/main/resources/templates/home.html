@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>워밍업 클럽 - 2일차</title>
+</head>
+<body>
+
+<div class="p-5 mb-5 text-center</> bg-light">
+    <h1 class="mb-3">[인프런 워밍업 클럽 0기 BE]</h1>
+    <a style="font-size: large" class="badge badge-primary text-basic" href="https://velog.io/@vosxja1/%EC%9D%B8%ED%94%84%EB%9F%B0-%EC%9B%8C%EB%B0%8D%EC%97%85-%ED%81%B4%EB%9F%BD-0%EA%B8%B0-BE-1%EC%9D%BC%EC%B0%A8-%EA%B3%BC%EC%A0%9C">1일차
+        과제</a>
+    <a style="font-size: large" class="badge badge-primary text-basic" href="/">2일차 과제</a>
+</div>
+<div class="container">
+    <h2>MyAPI</h2>
+    <div class="card">
+        <div class="card-header"><h2> 1번 문제</h2></div>
+        <div class="card-body">
+            <h3>문제 1</h3>
+            <p>두 수를 입력하면, 다음과 같은 결과가 나오는 <span class="badge badge-light text-danger">GET</span> API를 만들어 보자!</p>
+            <ul>
+                <li>path : <span class="badge badge-light text-danger">/api/v1/calc</span> 이다.</li>
+
+                <li>쿼리 파라미터 : <strong>num1, num2</strong></li>
+
+            </ul>
+            <div class="col-sm-8" style="background-color: ivory">
+                {<br>
+                <span class="text-success">"add"</span>: 덧셈결과,<br>
+                <span class="text-success">"minus"</span>: 뺄셈결과,<br>
+                <span class="text-success">"multiply"</span>: 곱셈결과<br>
+                }
+            </div>
+            <br>
+            <h3>예시</h3>
+            <p><strong>GET/api/v1/calc?num1=10&num2=5</strong></p>
+            <div class="col-sm-8" style="background-color: ivory">
+                {<br>
+                <span class="text-success">"add"</span>: <span class="text-danger">15,</span><br>
+                <span class="text-success">"minus"</span>: <span class="text-danger">5,</span><br>
+                <span class="text-success">"multiply"</span>: <span class="text-danger">50</span><br>
+                }
+            </div>
+            <br>
+            <hr>
+            <h3>MyAPI 1</h3>
+            <div class="col-sm-8" style="background-color: ivory">
+                <br>
+                <label for="num1">num1 : </label> <input type="number" id="num1" class="form-control" value="0"><br>
+                <label for="num2">num2 : </label> <input type="number" id="num2" class="form-control" value="0"><br>
+                <button class="btn btn-primary" th:onclick="calcBtn()">GET</button>
+                <br>
+                <br>
+            </div>
+            <br>
+            <div class="col-sm-8" style="background-color: ivory">
+                <span id="calc">
+                <h3 class="badge badge-light text-danger">실행 결과 : </h3><br>
+                </span>
+            </div>
+        </div>
+        <div class="card-body"></div>
+        <div class="card-header"><h2> 2번 문제</h2></div>
+        <div class="card-body">
+            <h3>문제 2</h3>
+            <p>날짜를 입력하면, 몇 요일인지 알려주는 <span class="badge badge-light text-danger">GET</span> API를 만들어 보자!</p>
+            <p>path와 쿼리 파라미터는 임의로 만들어도 상관없다.</p>
+            <br>
+            <h3>예시</h3>
+            <p><strong>GET/api/day-of-the-week?date=2023-01-01</strong></p>
+            <div class="col-sm-8" style="background-color: ivory">
+                {<br>
+                <span class="text-success">"dayOfTheWeek" : "MON"</span><br>
+                }
+            </div>
+            <br>
+            <hr>
+            <h3>MyAPI 2</h3>
+            <div class="col-sm-8" style="background-color: ivory">
+                <br>
+                <label for="day_of_week">
+                    <input type="date" class="form-control" id="day_of_the_week">
+                </label>
+                <br>
+                <br>
+                <button class="btn btn-primary" th:onclick="day_of_the_week_Btn()">GET</button>
+                <br><br>
+            </div>
+            <br>
+            <div class="col-sm-8" style="background-color: ivory">
+                <span id="day_of_week">
+                <h3 class="badge badge-light text-danger">실행 결과 : </h3><br>
+                </span>
+
+            </div>
+        </div>
+
+        <div class="card-header"><h2>3번 문제</h2></div>
+        <div class="card-body">
+            <h3>문제 3</h3>
+            <p>여러 수를 받아 총 합을 반환하는 <span class="badge badge-light text-danger">POST</span> API를 만들어 보자!</p>
+            <p>API에서 받는 Body는 다음과 같은 형태이다. (<span class="badge badge-ligth text-danger">HINT</span> : 요청을 받는 DTO에서 <span class="badge badge-ligth text-danger">List</span>를 갖고 있으면 JSON의 배열을 받을 수 있습니다)</p>
+            <div class="col-sm-8" style="background-color: ivory">
+                {<br>
+                <span class="text-success">"numbers": </span>[<span class="text-danger">1, 2, 3, 4, 5</span>]<br>
+                }
+            </div>
+            <br>
+            <p><strong>반환 결과</strong></p>
+            <div class="col-sm-8" style="background-color: ivory">
+                <br>
+                <p class="text-danger">15</p>
+                <br>
+            </div>
+            <br>
+            <hr>
+            <h3>MyAPI 3</h3>
+            <div class="col-sm-8" style="background-color: ivory">
+                <br>
+                <table class="table table-borderless">
+                    <tr>
+                        <td>number : {</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="number" class="numbers" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="number" class="numbers" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="number" class="numbers" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="number" class="numbers" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="number" class="numbers" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td>}</td>
+                        <td></td>
+                    </tr>
+                </table>
+                <button class="btn btn-primary" th:onclick="addNumbers()">POST</button>
+                <br>
+                <br>
+            </div>
+            <br>
+            <div class="col-sm-8" style="background-color: ivory">
+            <span id="returnAddNumbers">
+                <h3 class="badge badge-light text-danger">실행 결과 : </h3><br>
+            </span>
+            </div>
+        </div>
+        <div class="card-footer">Yeong_Huns</div>
+
+    </div>
+</div>
+<script src="/js/API.js"></script>
+</body>
+</html>
