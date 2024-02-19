@@ -25,7 +25,7 @@ public class MyAnnotation {
         System.out.print("[ADD, SUB, MUL, DIV] : ");
         String cal = scan.next();
 
-        CalculatorService.MyCalculatorService(new Example(num1, num2, cal));
+        CalculatorService.MyCalculatorService(new Example(num1, num2, cal)); // 스캐너로 num1, num2, cal 값을 받아서 생성자로 Example생성 후 MyCalculatorService에 전달
         System.out.print("====================================\n");
         System.out.print("♪~ ♬ ♪♬~♪ ♪~ ♬ ♪♬~♪ ♪~ ♬ ♪♬~♪ ♪~ ♬ ♪\n");
 
