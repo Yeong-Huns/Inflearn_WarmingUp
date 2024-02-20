@@ -18,7 +18,7 @@ public class APIService {
         return localDate.getDayOfWeek();
     }
 
-    public int addNumber(AddNumberRequest addNumberRequest) {
-        return addNumberRequest.getNumbers().stream().mapToInt(Integer::intValue).sum();
+    public Integer addNumber(AddNumberRequest addNumberRequest) {
+        return addNumberRequest.getNumbers().stream().reduce(0,Integer::sum);
     }
 }
