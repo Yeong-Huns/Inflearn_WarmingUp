@@ -14,7 +14,7 @@ spring:
     activate:
       on-profile: dev
   datasource:
-    url: "jdbc:mysql://localhost:3306/inflearn"
+    url: "jdbc:mysql://localhost:3306/Inflearn"
     username: "root"
     password: "Am@zon11_!!@"
     driver-class-name: com.mysql.cj.jdbc.Driver
