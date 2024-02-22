@@ -152,7 +152,7 @@ function salesAmountBtn(){
             const notSalesAmount = data.notSalesAmount;
             $("#salesAmountID").html(
                 `
-                <h3 class="badge badge-light text-danger">실행 결과 : </h3>
+                <h3 class="badge badge-light text-danger">실행 결과 : </h3><br>
                  {<br>
                 &nbsp;&nbsp;<span class="text-success">"salesAmount"</span>: <span class="text-danger">${salesAmount},</span><br>
                 &nbsp;&nbsp;<span class="text-success">"notSalesAmount"</span>: <span class="text-danger">${notSalesAmount}</span><br>
