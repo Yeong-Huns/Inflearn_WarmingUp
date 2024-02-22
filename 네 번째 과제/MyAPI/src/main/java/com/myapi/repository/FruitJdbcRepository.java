@@ -27,19 +27,13 @@ public class FruitJdbcRepository {
         jdbcTemplate.update(sql, soldFruitInfoRequest.getId());
     }
     public SalesAmountResponse salesAmount(String name){
-        String nameCheck = "SELECT * FROM inflearn.fruit WHERE name=?";
-        boolean isNotExist = jdbcTemplate.query(nameCheck, (rs, rowNum)-> 0, name).isEmpty();
-        if(isNotExist) throw new IllegalArgumentException();
         String salesAmountsql = "SELECT sum(price) FROM fruit WHERE sold_out = 1 AND name=? GROUP BY name";
         String notSalesAmountsql = "SELECT sum(price) FROM fruit WHERE sold_out = 0 AND name=? GROUP BY name";
-
         List<Long> salesAmount = jdbcTemplate.query(salesAmountsql, (rs, rowNum)-> rs.getLong("sum(price)"), name);
         List<Long> notsalesAmount = jdbcTemplate.query(notSalesAmountsql, (rs, rowNum)-> rs.getLong("sum(price)"), name);
+        if(salesAmount.isEmpty() && notsalesAmount.isEmpty()) throw new IllegalArgumentException("존재하지 않는 과일입니다.");
         long sales = salesAmount.isEmpty()?0:salesAmount.get(0);
         long notsales = notsalesAmount.isEmpty()?0:notsalesAmount.get(0);
-        System.out.println("salesAmount : " + sales);
-        System.out.println("notsales : " + notsales);
-        System.out.println("name : " + name);
         return new SalesAmountResponse(sales, notsales);
     }
 }

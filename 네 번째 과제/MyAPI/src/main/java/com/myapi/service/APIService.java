@@ -17,6 +17,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class APIService {
     private final FruitJdbcRepository fruitJdbcRepository;
+
     public CalcEntity calculatorService(CalcRequest request) {
         return request.toEntity();
     }
@@ -26,14 +27,18 @@ public class APIService {
     }
 
     public Integer addNumber(AddNumberRequest addNumberRequest) {
-        return addNumberRequest.getNumbers().stream().reduce(0,Integer::sum);
+        return addNumberRequest.getNumbers().stream().reduce(0, Integer::sum);
     }
 
-    public void saveFruitInfo(FruitInfoRequest request){
+    public void saveFruitInfo(FruitInfoRequest request) {
         fruitJdbcRepository.saveFruitInfo(request.toEntity());
     }
 
-    public void soldFruitInfo(SoldFruitInfoRequest request){ fruitJdbcRepository.soldFruitInfo(request);}
+    public void soldFruitInfo(SoldFruitInfoRequest request) {
+        fruitJdbcRepository.soldFruitInfo(request);
+    }
 
-    public SalesAmountResponse salesAmount(String name){ return fruitJdbcRepository.salesAmount(name);}
+    public SalesAmountResponse salesAmount(String name) {
+        return fruitJdbcRepository.salesAmount(name);
+    }
 }
