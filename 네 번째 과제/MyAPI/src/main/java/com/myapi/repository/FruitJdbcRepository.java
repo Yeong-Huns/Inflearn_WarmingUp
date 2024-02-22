@@ -37,6 +37,9 @@ public class FruitJdbcRepository {
         List<Long> notsalesAmount = jdbcTemplate.query(notSalesAmountsql, (rs, rowNum)-> rs.getLong("sum(price)"), name);
         long sales = salesAmount.isEmpty()?0:salesAmount.get(0);
         long notsales = notsalesAmount.isEmpty()?0:notsalesAmount.get(0);
+        System.out.println("salesAmount : " + sales);
+        System.out.println("notsales : " + notsales);
+        System.out.println("name : " + name);
         return new SalesAmountResponse(sales, notsales);
     }
 }

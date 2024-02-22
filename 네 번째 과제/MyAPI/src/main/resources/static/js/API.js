@@ -150,6 +150,7 @@ function salesAmountBtn(){
         .then(data=>{
             const salesAmount = data.salesAmount;
             const notSalesAmount = data.notSalesAmount;
+            console.log(salesAmount + " : " + notSalesAmount)
             $("#salesAmountID").html(
                 `
                 <h3 class="badge badge-light text-danger">실행 결과 : </h3><br>
