@@ -2,9 +2,9 @@ package com.myapi.controller;
 
 import com.myapi.dto.calc.request.AddNumberRequest;
 import com.myapi.dto.calc.request.CalcRequest;
-import com.myapi.dto.fruit.request.FruitInfoRequest;
 import com.myapi.dto.calc.response.CalcResponse;
 import com.myapi.dto.calc.response.DayOfWeekResponse;
+import com.myapi.dto.fruit.request.FruitInfoRequest;
 import com.myapi.dto.fruit.request.SoldFruitInfoRequest;
 import com.myapi.dto.fruit.response.SalesAmountResponse;
 import com.myapi.entity.CalcEntity;
@@ -62,5 +62,4 @@ public class APIController {
         return ResponseEntity.ok()
                 .body(salesAmountRequest);
     }
-
 }

@@ -4,10 +4,12 @@ import com.myapi.dto.fruit.request.SoldFruitInfoRequest;
 import com.myapi.dto.fruit.response.SalesAmountResponse;
 import com.myapi.entity.FruitInfoEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 
 @Repository
 @RequiredArgsConstructor
@@ -21,7 +23,7 @@ public class FruitMySQLRepository implements FruitRepository{
     }
     @Override
     public void soldFruitInfo(SoldFruitInfoRequest soldFruitInfoRequest){ //없는 ID값에 접근하려하면 IllegalArgumentException
-        String idCheck = "SELECT sold_out FROM inflearn.fruit WHERE id=?";
+        String idCheck = "SELECT sold_out FROM fruit WHERE id=?";
         List<Boolean> isNotExist = jdbcTemplate.query(idCheck, (rs, rowNum)->rs.getBoolean("sold_out"), soldFruitInfoRequest.getId());
         if(isNotExist.isEmpty() || isNotExist.get(0)) throw new IllegalArgumentException("존재하지 않거나 이미 팔린 상품입니다.");
         String sql = "UPDATE inflearn.fruit SET sold_out=1 WHERE id=?";

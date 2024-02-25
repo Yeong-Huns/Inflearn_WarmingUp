@@ -6,14 +6,9 @@ import com.myapi.entity.FruitInfoEntity;
 
 
 public interface FruitRepository {
-
-
     void saveFruitInfo(FruitInfoEntity fruitInfoEntity);
 
     void soldFruitInfo(SoldFruitInfoRequest soldFruitInfoRequest);
 
     SalesAmountResponse salesAmount(String name);
-
-
-
 }
