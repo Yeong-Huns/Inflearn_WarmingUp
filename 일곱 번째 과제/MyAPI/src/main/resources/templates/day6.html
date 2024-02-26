@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>워밍업 클럽 - 6일차</title>
+</head>
+<body>
+
+<div th:replace="~{fragment/header.html::header}"></div>
+<div class="container">
+    <h2>MyAPI</h2>
+    <div class="card">
+        <div class="card-header"><h2>Day 6</h2></div>
+        <div class="card-body">
+            <p>문제 1에서 코드가 분리되면 <span class="badge badge-light text-danger">FruitsController</span> / <span class="badge badge-light text-danger">FruitService</span> / <span class="badge badge-light text-danger">FruitsRepository</span> 가 생겼을 것입니다.</p>
+            <p>기존에 작성했던 <span class="badge badge-light text-danger">FruitRepository</span>를 <span class="badge badge-light text-danger">FruitMemoryRepository</span>와 <span class="badge badge-light text-danger">FruitsMySqlRepository</span>로 나누고
+                <span class="badge badge-light text-danger">@Primary</span>어노테이션을 활용해 두 Repository를 바꿔가며 동작시킬 수 있도록 코드를 변경해보세요! 😉</p>
+        </div>
+        <div class="card-header"><h2> 1번 문제</h2></div>
+        <div class="card-body">
+            <h3>문제 1</h3>
+            <p>우리는 작은 과일 가게를 운영하고 있습니다. 과일 가게에 입고된 "과일 정보"를 저장하는 API를 만들어 봅시다.<br>스펙은 다음과 같습니다.</p>
+            <ul>
+                <li> HTTP method : <span class="badge badge-light text-danger">POST</span></li>
+                <li> HTTP path : <span class="badge badge-light text-danger">/api/v1/fruit</span></li>
+                <li> HTTP 요청 Body</li>
+            </ul>
+            <div class="col-sm-8" style="background-color: #f5f4f1">
+                {<br>
+                &nbsp;&nbsp;<span class="text-success">"name"</span>: <span class="text-danger">String,</span><br>
+                &nbsp;&nbsp;<span class="text-success">"warehousingDate"</span>: <span class="text-danger">LocalDate,</span><br>
+                &nbsp;&nbsp;<span class="text-success">"price"</span>: <span class="text-primary">long</span><br>
+                }
+            </div>
+            <br>
+            <ul>
+                <li>HTTP 요청 Body 예시</li>
+            </ul>
+            <div class="col-sm-8" style="background-color: #f5f4f1">
+                {<br>
+                &nbsp;&nbsp;<span class="text-success">"name"</span>: <span class="text-success">"사과",</span><br>
+                &nbsp;&nbsp;<span class="text-success">"warehousingDate"</span>: <span class="text-success">"2024-02-01",</span><br>
+                &nbsp;&nbsp;<span class="text-success">"price"</span>: <span class="text-danger">5000</span><br>
+                }
+            </div>
+            <br>
+            <ul>
+                <li>응답 : 성공시 200</li>
+            </ul>
+            <div class="col-sm-8" style="background-color: #f5f4f1"><br>
+                📌 한 걸음 더!<br><br>
+
+                &nbsp;&nbsp;자바에서 정수를 다루는 가장 대표적인 두 가지 방법은 <span class="badge badge-light text-danger">int</span>와 <span class="badge badge-light text-danger">long</span>입니다.<br>
+                &nbsp;&nbsp;이 두가지 방법 중 위 API에서 <span class="badge badge-light text-danger">long</span>을 사용한 이유는 무엇일까요?<br><br>
+
+            </div>
+
+            <br>
+            <hr>
+            <h3>MyAPI 1</h3>
+            <div class="col-sm-8" style="background-color: #f5f4f1">
+                {<br>
+                <form id="frm">
+                    <table class="table-borderless">
+                        <tr>
+                            <td>&nbsp;&nbsp;<span class="text-success">"name"</span>:&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;<input type="text" class="form-control" id="fruitName"></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;<span class="text-success">"warehousingDate"</span>:&nbsp;&nbsp;</td>
+                            <td>&nbsp;<input type="date" class="form-control" id="warehousingDate"></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;<span class="text-success">"price"</span>:&nbsp;&nbsp;</td>
+                            <td>&nbsp;<input type="number" class="form-control" id="fruitPrice"></td>
+                        </tr>
+                    </table>
+                </form>
+                }
+                <br><br>
+                <button class="btn btn-primary" th:onclick="saveFruitInfoBtn()">POST</button>
+                <br><br>
+            </div>
+            <br>
+            <div class="col-sm-8" style="background-color: #f5f4f1">
+                <span id="saveFruitInfo">
+                <h3 class="badge badge-light text-danger">실행 결과 : </h3><br>
+                </span>
+            </div>
+        </div>
+        <div class="card-body"></div>
+        <div class="card-header"><h2> 2번 문제</h2></div>
+        <div class="card-body">
+            <h3>문제 2</h3>
+            <p>과일이 팔리게 되면, 우리 시스템에 팔린 과일 정보를 기록해야 합니다. 스펙은 다음과 같습니다.</p>
+            <ul>
+                <li>HTTP method : <span class="badge badge-light text-danger">PUT</span></li>
+                <li>HTTP path : <span class="badge badge-light text-danger">/api/v1/fruit</span></li>
+                <li>HTTP 요청 Body</li>
+            </ul>
+            <div class="col-sm-8" style="background-color: #f5f4f1"><br>
+                {<br>
+                &nbsp;&nbsp;<span class="text-success">"id"</span>: <span class="text-primary">long</span><br>
+                }<br><br>
+            </div>
+            <br>
+            <ul>
+                <li>HTTP 요청 Body 예시</li>
+            </ul>
+            <div class="col-sm-8" style="background-color: #f5f4f1"><br>
+                {<br>
+                &nbsp;&nbsp;<span class="text-success">"id"</span>: <span class="text-danger">3</span><br>
+                }<br><br>
+            </div>
+            <br>
+            <ul>
+                <li>응답 : 성공시 200</li>
+            </ul>
+
+
+            <hr>
+            <h3>MyAPI 2</h3>
+            <div class="col-sm-8" style="background-color: #f5f4f1"><br>
+                {<br>
+                <table class="table table-borderless">
+                    <tr>
+                        <td>
+                            &nbsp;&nbsp;<span class="text-success">"id"</span>:
+                        </td>
+                        <td><input type="number" id="fruitId" class="form-control" style="width: 20%"></td>
+                    </tr>
+                </table>
+                }<br><br>
+                <button class="btn btn-primary" th:onclick="soldFruitInfoBtn()">POST</button>
+                <br><br>
+            </div>
+            <br>
+            <div class="col-sm-8" style="background-color: #f5f4f1">
+                <span id="soldFruitInfo">
+                <h3 class="badge badge-light text-danger">실행 결과 : </h3><br>
+                </span>
+
+            </div>
+        </div>
+
+        <div class="card-header"><h2>3번 문제</h2></div>
+        <div class="card-body">
+            <h3>문제 3</h3>
+            <p>우리는 특정 과일을 기준으로 팔린 금액, 팔리지 않은 금액을 조회하고 싶습니다.<br>
+                예를 들어</p>
+            <ol>
+                <li>&nbsp;(1, 사과, 3000원, 판매 ○)</li>
+                <li>&nbsp;(2, 사과, 4000원, 판매 ×)</li>
+                <li>&nbsp;(3, 사과, 3000원, 판매 ○)</li>
+            </ol>
+            <p>와 같은 세 데이터가 있다면 우리의 API는 판매된 금액 : 6000원, 판매되지 않은 금액 : 4000원 이라고 응답해야합니다.<br>
+                구체적인 스펙은 다음과 같습니다.</p>
+            <ul>
+                <li>HTTP method: <span class="badge badge-light text-danger">GET</span></li>
+                <li>HTTP path: <span class="badge badge-light text-danger">/api/v1/fruit/stat</span></li>
+                <li>
+                    HTTP query
+                    <ul>
+                        <li>name : 과일 이름</li>
+                    </ul>
+                </li>
+                <li>예시 <span class="badge badge-light text-danger">GET /api/v1/fruit/stat?name=사과</span></li>
+                <br>
+                <li>HTTP 응답 Body</li>
+            </ul>
+            <div class="col-sm-8" style="background-color: #f5f4f1"><br>
+                {<br>
+                &nbsp;&nbsp;<span class="text-success">"salesAmount"</span>: <span class="text-primary">long,</span><br>
+                &nbsp;&nbsp;<span class="text-success">"notSalesAmount"</span>: <span class="text-primary">long</span><br>
+                }<br><br>
+            </div>
+            <br>
+            <ul>
+                <li>
+                    HTTP 응답 Body 예시
+                </li>
+            </ul>
+            <div class="col-sm-8" style="background-color: #f5f4f1"><br>
+                {<br>
+                &nbsp;&nbsp;<span class="text-success">"salesAmount"</span>: <span class="text-danger">6000,</span><br>
+                &nbsp;&nbsp;<span class="text-success">"notSalesAmount"</span>: <span class="text-danger">4000</span><br>
+                }<br><br>
+            </div>
+            <br>
+            <div class="col-sm-8" style="background-color: #f5f4f1"><br>
+
+                📌 한 걸음 더!
+                &nbsp;&nbsp;<p>(문제 3번을 모두 푸셨다면)SQL의 sum, group by 키워드를 검색해 적용해보세요! 😊</p>
+                <br>
+            </div>
+
+            <hr>
+            <h3>MyAPI 3</h3>
+            <div class="col-sm-8" style="background-color: #f5f4f1"><br>
+                <br>
+                <table>
+                    <tr>
+                        <td>&nbsp;&nbsp;<span class="text-success">"Name"</span>:</td>
+                        <td>&nbsp;<input type="text" id="fruitSaleName"></td>
+                    </tr>
+                </table>
+                <br><br>
+                <button class="btn btn-primary" th:onclick="salesAmountBtn()">GET</button>
+                <br><br>
+            </div>
+            <br>
+            <div class="col-sm-8" style="background-color: #f5f4f1">
+            <span id="salesAmountID">
+                <h3 class="badge badge-light text-danger">실행 결과 : </h3><br>
+            </span>
+            </div>
+        </div>
+        <div class="card-footer">Yeong_Huns</div>
+
+    </div>
+</div>
+<script src="/js/API.js"></script>
+</body>
+</html>
